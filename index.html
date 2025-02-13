@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Around The World</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>My Journey Around the World</h1>
+        <p>Follow my travels through different places!</p>
+    </header>
+    
+    <section class="globe-container">
+        <img id="globe" src="globe.png" alt="Globe">
+        <div id="location">Born in: Bangladesh</div>
+    </section>
+    
+    <button id="next-location">Next Destination</button>
+    
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .globe-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+        #globe {
+            width: 150px;
+            transition: transform 1s ease-in-out;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+    
+    <script>
+        const locations = [
+            { name: "Bangladesh", transform: "translate(0, 0)" },
+            { name: "Australia", transform: "translate(100px, 50px)" },
+            { name: "Japan", transform: "translate(-50px, -100px)" },
+            { name: "Germany", transform: "translate(80px, -50px)" }
+        ];
+        
+        let index = 0;
+        const globe = document.getElementById("globe");
+        const locationText = document.getElementById("location");
+        const nextButton = document.getElementById("next-location");
+        
+        nextButton.addEventListener("click", () => {
+            index = (index + 1) % locations.length;
+            globe.style.transform = locations[index].transform;
+            locationText.textContent = "Now in: " + locations[index].name;
+        });
+    </script>
+</body>
+</html>
