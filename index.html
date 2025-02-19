@@ -4,63 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Around The World</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .map-container {
+            position: relative;
+            display: inline-block;
+            width: 600px;
+            height: 300px;
+        }
+
+        #world-map {
+            width: 100%;
+        }
+
+        #pointer {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            display: none; /* Pointer hidden initially */
+        }
+
+        #description {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const locations = [
+                { name: "Bangladesh", description: "Born here and studied through high school.", x: "55%", y: "70%" },
+                { name: "Sydney", description: "Moved here for uni in 2023 and have been here ever since.", x: "85%", y: "80%" },
+                { name: "New York", description: "This is my favorite tourist spot and my most visited country.", x: "30%", y: "40%" },
+                { name: "End", description: "This was just a little bit about myself. Thanks for visiting my website!", hidePointer: true }
+            ];
+
+            let index = -1; // Start at -1 so the first click triggers the first phase
+            const pointer = document.getElementById("pointer");
+            const descriptionText = document.getElementById("description");
+            const nextButton = document.getElementById("next-location");
+
+            nextButton.addEventListener("click", () => {
+                index++;
+                if (index < locations.length) {
+                    const location = locations[index];
+
+                    if (location.hidePointer) {
+                        pointer.style.display = "none"; // Hide pointer for the last phase
+                    } else {
+                        pointer.style.display = "block"; // Show pointer
+                        pointer.style.left = location.x;
+                        pointer.style.top = location.y;
+                    }
+
+                    descriptionText.textContent = location.description; // Update description
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
         <h1>My Journey Around the World</h1>
         <p>Follow my travels through different places!</p>
     </header>
-    
-    <section class="globe-container">
-        <img id="globe" src="globe.png" alt="Globe">
-        <div id="location">Born in: Bangladesh</div>
+
+    <section class="map-container">
+        <img id="world-map" src="globe.png" alt="World Map">
+        <div id="pointer"></div>
+        <div id="description"></div>
     </section>
-    
+
     <button id="next-location">Next Destination</button>
-    
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .globe-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 300px;
-        }
-        #globe {
-            width: 150px;
-            transition: transform 1s ease-in-out;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
-    
-    <script>
-        const locations = [
-            { name: "Bangladesh", transform: "translate(0, 0)" },
-            { name: "Australia", transform: "translate(100px, 50px)" },
-            { name: "Japan", transform: "translate(-50px, -100px)" },
-            { name: "Germany", transform: "translate(80px, -50px)" }
-        ];
-        
-        let index = 0;
-        const globe = document.getElementById("globe");
-        const locationText = document.getElementById("location");
-        const nextButton = document.getElementById("next-location");
-        
-        nextButton.addEventListener("click", () => {
-            index = (index + 1) % locations.length;
-            globe.style.transform = locations[index].transform;
-            locationText.textContent = "Now in: " + locations[index].name;
-        });
-    </script>
 </body>
 </html>
